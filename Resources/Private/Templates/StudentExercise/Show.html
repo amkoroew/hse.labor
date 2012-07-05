@@ -1,0 +1,27 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Exercise - {studentExercise.exerciseNumber}</f:section>
+
+<f:section name="Content">
+
+	<f:if condition="{studentExercise.required} < 1">
+		<p>This exercise is optional.</p>
+	</f:if>
+	<p>{f:format.raw(value: studentExercise.question)}</p>
+	<p>{f:format.raw(value: studentExercise.hint)}</p>
+
+	<f:if condition="{studentExercise.answered}">
+		<f:then>
+			<p>{f:format.raw(value: studentExercise.answer)}</p>
+		</f:then>
+		<f:else>
+			<f:form method="post" action="verify">
+				<f:form.hidden name="studentExercise" value="{studentExercise}" />
+				<label for="answer">Answer:</label><br />
+				<f:form.textfield name="answer" /><br />
+				<f:form.submit value="Verify Exercise" />
+			</f:form>
+		</f:else>
+	</f:if>
+
+</f:section>

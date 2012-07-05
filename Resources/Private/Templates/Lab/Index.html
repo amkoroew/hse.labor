@@ -1,0 +1,11 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Labs</f:section>
+
+<f:section name="Content">
+	<ul>
+		<f:for each="{activeExercises}" as="activeExercise">
+			<li>{activeExercise.exerciseNumber}</li>
+		</f:for>
+	</ul>
+</f:section>

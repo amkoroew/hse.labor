@@ -1,0 +1,13 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Edit an existing Module</f:section>
+
+<f:section name="Content">
+
+	<f:form action="update" object="{module}" name="module">
+		<label for="name">Name:</label><br />
+		<f:form.textfield property="name" id="name" />
+		<f:form.submit value="Update Module" />
+	</f:form>
+
+</f:section>

@@ -1,0 +1,17 @@
+required:
+ - verify answers
+ - Template for Loginform. Own LoginController or LDAP/LoginController? Authentication method.
+ - add exercises to student. in constructor?
+ - remove unecessary html output -> if conditions to check if a <ul></ul> is neede because there will be <li> elements. is there a list view helper?
+
+optional:
+ - Lab::getRandomExercises looks strange. Maybe wrong place too.
+ - translation
+ - redirect to useful/sensible site
+ - rename exercices to studentExercises in sudent class?
+ - cleanup Student tests (in particular creation of multiple exercises in the test cases)
+ - use groupname instead of gid
+ - should showAction from  module controller list labs or should der be a listAction in lab controller?
+
+note:
+ - gid 20000 for students 10000 for admins (a student will never be admin even if both gids exist)

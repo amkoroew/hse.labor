@@ -1,0 +1,26 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Edit an existing Exercise</f:section>
+
+<f:section name="Content">
+
+	<f:flashMessages class="flashmessages"/>
+
+	<f:form method="post" action="update" object="{exercise}" name="exercise">
+		<f:form.hidden name="lab" value="{lab}" />
+		<label for="exerciseNumber">Exercise#:</label><br />
+		<f:form.textfield property="exerciseNumber" id="exerciseNumber" /><br />
+		<label for="question">Question:</label><br />
+		<f:form.textarea cols="80" rows="5" property="question" id="question" /><br />
+		<label for="hint">Hint:</label><br />
+		<f:form.textarea cols="80" rows="5" property="hint" id="hint" /><br />
+		<label for="answer">Answer:</label><br />
+		<f:form.textfield property="answer" id="answer" /><br />
+		<label for="active">Active:</label><br />
+		<f:form.checkbox property="active" id="active" value="active"/><br />
+		<label for="required">Required:</label><br />
+		<f:form.checkbox property="required" id="required" value="required"/><br />
+		<f:form.submit value="Update Exercise" />
+	</f:form>
+
+</f:section>

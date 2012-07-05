@@ -1,0 +1,26 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Student - {student.name.fullName}</f:section>
+
+<f:section name="Content">
+
+	<ul>
+		<f:for each="{labs}" as="lab">
+			<li>{lab.name}
+				<ul>
+					<f:for each="{lab.exercises}" as="exercise">
+						<f:for each="{student.exercises}" as="studentExercise">
+							<f:if condition="{exercise} == {studentExercise.exercise}">
+								<li>
+									<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
+									<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
+								</li>
+							</f:if>
+						</f:for>
+					</f:for>
+				</ul>
+			</li>
+		</f:for>
+	</ul>
+
+</f:section>

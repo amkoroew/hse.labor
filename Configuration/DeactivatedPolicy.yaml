@@ -1,0 +1,38 @@
+#                                                                        #
+# Security policy definition                                             #
+#                                                                        #
+# This file contains the security policy configuration for the           #
+# HSE.Labor package                                                      #
+
+resources:
+  methods:
+    HSE_Labor_StudentMethods: 'method(HSE\Labor\Controller\StudentController->.*Action())'
+    HSE_Labor_ModuleMethods: 'method(HSE\Labor\Controller\ModuleController->.*Action())'
+    HSE_Labor_LabMethods: 'method(HSE\Labor\Controller\LabController->.*Action())'
+    HSE_Labor_ExerciseMethods: 'method(HSE\Labor\Controller\ExerciseController->.*Action())'
+    HSE_Labor_StudentExerciseMethods: 'method(HSE\Labor\Controller\StudentExerciseController->.*Action())'
+
+    HSE_Labor_DisplayModuleMethods: 'method(HSE\Labor\Controller\ModuleController->(index|show)Action())'
+    HSE_Labor_DisplayLabMethods: 'method(HSE\Labor\Controller\LabController->(index|show)Action())'
+    HSE_Labor_DisplayExerciseMethods: 'method(HSE\Labor\Controller\ExerciseController->(index|show)Action())'
+    HSE_Labor_DisplayStudentExerciseMethods: 'method(HSE\Labor\Controller\StudentExerciseController->(index|show)Action())'
+
+roles:
+  Administrator: []
+  Student: []
+
+acls:
+  Administrator:
+    methods:
+      HSE_Labor_StudentMethods: GRANT
+      HSE_Labor_ModuleMethods: GRANT
+      HSE_Labor_LabMethods: GRANT
+      HSE_Labor_ExerciseMethods: GRANT
+      HSE_Labor_StudentExerciseMethods: GRANT
+
+  Student:
+    methods:
+      HSE_Labor_DisplayModuleMethods: GRANT
+      HSE_Labor_DisplayLabMethods: GRANT
+      HSE_Labor_DisplayExerciseMethods: GRANT
+      HSE_Labor_DisplayStudentExerciseMethods: GRANT

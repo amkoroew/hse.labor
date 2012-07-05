@@ -1,0 +1,37 @@
+#                                                                        #
+# Security policy definition                                             #
+#                                                                        #
+# This file contains the security policy configuration for the           #
+# HSE.Labor package                                                      #
+
+#resources:
+#  methods:
+#    HSE_Labor_studentMethods: 'method(\HSE\Labor\Controller\StudentController->.*())'
+#    HSE_Labor_displayMethods: 'method(HSE\Labor\Controller\(Module|Lab|Exercise|StudentExercise).*->(index|list|show).*())'
+#    HSE_Labor_createMethods: 'method(HSE\Labor\Controller\.*->(new|create).*())'
+#    HSE_Labor_updateMethods: 'method(HSE\Labor\Controller\.*->(edit|update).*())'
+#    HSE_Labor_deleteMethods: 'method(HSE\Labor\Controller\.*->delete.*())'
+#    HSE_Labor_indexMethod: 'method(HSE\Labor\Controller\ModuleController->indexAction())'
+
+roles:
+  Administrator: []
+  Student: []
+
+#acls:
+#  Administrator:
+#    methods:
+#    HSE_Labor_studentMethods: GRANT
+#    HSE_Labor_displayMethods: GRANT
+#    HSE_Labor_createMethods: GRANT
+#    HSE_Labor_updateMethods: GRANT
+#    HSE_Labor_deleteMethods: GRANT
+#    HSE_Labor_indexMethod: GRANT
+
+#  Student:
+#    methods:
+#    HSE_Labor_studentMethods: DENY
+#    HSE_Labor_displayMethods: GRANT
+#    HSE_Labor_createMethods: DENY
+#    HSE_Labor_updateMethods: DENY
+#    HSE_Labor_deleteMethods: DENY
+#    HSE_Labor_indexMethod: GRANT

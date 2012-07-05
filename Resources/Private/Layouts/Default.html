@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title><f:render section="Title" /></title>
+		<f:base />
+		<link rel="stylesheet" href="{f:uri.resource(path: 'Reset.css')}" type="text/css" media="all" />
+		<link rel="stylesheet" href="{f:uri.resource(path: 'Labor.css')}" type="text/css" media="all" />
+	</head>
+	<body>
+		<header>
+			<h1>Fakultät Informationstechnik</h1>
+			<h2>Labor für Betriebssysteme (F1.305)</h2>
+		</header>
+		<nav>
+			<f:render partial="Navigation" arguments="{modules: modules, currentModule: currentModule, currentLab: currentLab, currentExercise: currentExercise}"  />
+		</nav>
+		<div class="clear"></div>
+		<div id="content">
+			<aside>
+				<f:security.ifAuthenticated>
+					<f:then>
+						<p>
+						Name: {party.Name.FullName}<br />
+						<f:security.ifHasRole role="Administrator">
+							<f:then>
+								<span class="highlighted">Administrator</span><br />
+							</f:then>
+							<f:else>
+								Solved Ecercises: {party.answeredCount}/{party.exercisesCount} {party.answeredPercentage}%<br />
+							</f:else>
+						</f:security.ifHasRole>
+						<f:link.action controller="login" action="logout">Logout</f:link.action>
+						</p>
+					</f:then>
+					<f:else>
+						<f:form controller="login" action="authenticate">
+							<fieldset class="login">
+								<legend>Login</legend>
+								<label>User</label><br />
+								<input type="text" name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][username]" id="username" value="{username}" /><br />
+								<label>Password</label><br />
+								<input type="password" name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][password]" id="password" /><br />
+								<f:form.submit value="Login" />
+							</fieldset>
+						</f:form>
+					</f:else>
+				</f:security.ifAuthenticated>
+			</aside>
+			<div id="mainContent">
+				<f:flashMessages class="flashmessages" as="flashMessages">
+					<section id="info">
+						<dl>
+							<f:for each="{flashMessages}" as="flashMessage">
+								<dt>{flashMessage.title}</dt>
+								<dd class="{flashMessage.severity}">{flashMessage}</dd>
+							</f:for>
+						</dl>
+					</section>
+				</f:flashMessages>
+				<f:render section="Content" />
+			</div>
+		</div>
+		<footer>
+			<!-- Footer -->
+		</footer>
+
+	</body>
+</html>
+

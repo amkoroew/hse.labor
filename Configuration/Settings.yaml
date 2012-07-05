@@ -1,0 +1,39 @@
+#                                                                        #
+# Settings Configuration for the Labor package                           #
+#                                                                        #
+
+TYPO3:
+  FLOW3:
+    security:
+      authentication:
+        providers:
+          DefaultProvider:
+            provider: 'PersistedUsernamePasswordProvider'
+            entryPoint: 'WebRedirect'
+            entryPointOptions:
+              uri: 'login/index'
+          LdapProvider:
+            provider: HSE\Labor\Security\Authentication\Provider\LDAPProviderParty
+            providerOptions:
+              type: 'LDAP'
+              host: 127.0.0.1
+              port: 389
+              baseDn: dc=development,dc=lan
+
+              bind:
+                anonymous: TRUE
+                dn:
+                password:
+
+              ldapOptions:
+                protocol_version: 3
+
+              filter:
+                account: '(uid=?)'
+                ignoreDomain: TRUE
+
+              domain: 'DEVELOPMENT'
+
+            entryPoint: 'WebRedirect'
+            entryPointOptions:
+              uri: 'login/index'

@@ -1,0 +1,20 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Create a new Lab</f:section>
+
+<f:section name="Content">
+
+	<f:form action="create" object="{newLab}" name="newLab">
+		<f:form.hidden name="module" value="{module}" />
+		<label for="labNumber">Lab#:</label><br />
+		<f:form.textfield property="labNumber" id="labNumber" />
+		<br />
+		<label for="name">Name:</label><br />
+		<f:form.textfield property="name" id="name" />
+		<br />
+		<label for="numberOfExercises">Number of exercises:</label><br />
+		<f:form.textfield property="numberOfExercises" id="numberOfExercises" />
+		<f:form.submit value="Create Lab" />
+	</f:form>
+
+</f:section>

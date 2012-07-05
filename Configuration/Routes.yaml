@@ -1,0 +1,110 @@
+#-
+#  name: 'FLOW3 authentication'
+#  uriPattern: 'authenticate'
+#  defaults:
+#    '@package': 'TYPO3.FLOW3'
+#    '@controller': 'Security\Authentication\Controller\Authentication'
+#    '@action': 'authenticate'
+
+-
+  name: 'Logins action'
+  uriPattern: 'login/{@action}'
+  defaults:
+    '@controller': 'Login'
+
+-
+  name: 'StudentExercise action'
+  uriPattern: 'studentexercise/{studentexercise}/{@action}'
+  defaults:
+    '@controller': 'StudentExercise'
+  routeParts:
+    studentexercise:
+      objectType: 'HSE\Labor\Domain\Model\StudentExercise'
+      uriPattern: '{exerciseNumber}'
+
+-
+  name: 'StudentExercises action'
+  uriPattern: 'studentexercise/{@action}'
+  defaults:
+    '@controller': 'StudentExercise'
+
+#-
+#  name: 'Student action'
+#  uriPattern: 'student/{student}/{@action}'
+#  defaults:
+#    '@controller': 'Student'
+#  routeParts:
+#    student:
+#      objectType: 'HSE\Labor\Domain\Model\Student'
+#      uriPattern: '{name.fullName}'
+
+-
+  name: 'Students action'
+  uriPattern: 'student/{@action}'
+  defaults:
+    '@controller': 'Student'
+
+-
+  name: 'Exercise action'
+  uriPattern: 'exercise/{exercise}/{@action}'
+  defaults:
+    '@controller': 'Exercise'
+  routeParts:
+    exercise:
+      objectType: 'HSE\Labor\Domain\Model\Exercise'
+      uriPattern: '{exerciseNumber}'
+
+-
+  name: 'Exercises action'
+  uriPattern: 'exercise/{@action}'
+  defaults:
+    '@controller': 'Exercise'
+
+-
+  name: 'Lab action'
+  uriPattern: 'lab/{lab}/{@action}'
+  defaults:
+    '@controller': 'Lab'
+  routeParts:
+    lab:
+      objectType: 'HSE\Labor\Domain\Model\Lab'
+      uriPattern: '{labNumber}'
+#      uriPattern: '{name}'
+
+-
+  name: 'Labs action'
+  uriPattern: 'lab/{@action}'
+  defaults:
+    '@controller': 'Lab'
+
+#-
+#  name: 'Lab action'
+#  uriPattern: '{lab}/{@action}'
+#  defaults:
+#    '@controller': 'Lab'
+#  routeParts:
+#    lab:
+#      objectType: 'HSE\Labor\Domain\Model\Lab'
+
+#-
+#  name: 'Module action'
+#  uriPattern: '{module}/{@action}'
+#  defaults:
+#    '@controller': 'Module'
+#  routeParts:
+#    module:
+#      objectType: 'HSE\Labor\Domain\Model\Module'
+#      uriPattern: '{name}'
+
+-
+  name: 'Modules actions'
+  uriPattern: '{@action}'
+  defaults:
+    '@controller': 'Module'
+  
+-
+  name: 'Labor'
+  uriPattern: '(modules)'
+  defaults:
+    '@controller': 'Module'
+    '@action': 'index'

@@ -1,0 +1,13 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Login</f:section>
+
+<f:section name="Content">
+	<f:form action="authenticate">
+		<label>User</label><br />
+		<input type="text" name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][username]" id="username" value="{username}" /><br />
+		<label>Password</label><br />
+		<input type="password" name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][password]" id="password" /><br />
+		<f:form.submit value="Login" />
+	</f:form>
+</f:section>

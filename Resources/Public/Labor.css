@@ -1,0 +1,199 @@
+body {
+	margin: 0 auto;
+	width: 960px;
+	font: 13px/22px Helvetica, Arial, sans-serif;
+	background: #32537F;
+}
+
+h2 {
+	font-size: 28px;
+	line-height: 44px;
+	padding: 22px 0;
+}
+
+h3 {
+	font-size: 18px;
+	line-height: 22px;
+	padding: 11px 0;
+}
+
+p {
+	padding-bottom: 22px;
+}
+
+.clear {
+	clear: both;
+}
+
+.highlighted {
+	color: red;
+	font-size: 1.2em;
+	text-decoration: underline;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+	background-color: #99CCFF;
+}
+
+header {
+	margin-top: 10px;
+	padding-top: 30px;
+	height: 90px;
+	background-color: #EDEDED;
+	background-image: url("logo.png");
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-origin: border-box;
+}
+
+header h1, header h2 {
+	margin-left: 300px;
+	color: #4444EE;
+	padding: 0px;
+}
+
+header h1 {
+	font-size: 28px;
+	line-height: 32px;
+	padding-bottom: 10px;
+}
+
+header h2 {
+	font-size: 24px;
+	line-height: 28px;
+}
+
+
+nav {
+	left: 0;
+	width: 100%;
+	margin: 4px 0;
+}
+
+nav ul {
+	margin: 0 auto;
+	width: 960px;
+	height: 36px;
+	list-style: none;
+	background-color: #DEDEDE;
+}
+
+nav ul li {
+	margin-left: 10px;
+	float: left;
+	width: 140px;
+	font-size: 14px;
+	line-height: 36px;
+	text-align: center;
+	color: #EDEDED;
+	background-color: #50A0FF;
+}
+
+nav ul li.active {
+	font-weight: bold;
+	background-color: #2387FF;
+}
+
+nav ul li a {
+	display: block;
+	margin-right: 20px;
+	width: 140px;
+	color: #EDEDED;
+	text-decoration: none;
+}
+
+nav ul li a:hover {
+	color: #EDED00;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+nav ul li ul {
+	position: absolute;
+	width: 100px;
+	display: none;
+}
+
+nav ul li:hover ul {
+	display: block;
+}
+
+nav ul li ul li {
+	margin-left: 0px;
+	clear: both;
+}
+
+nav ul li ul li {
+	border-top: 1px solid #EDEDED;
+}
+
+#content {
+	display: table;
+	height: 600px;
+}
+
+aside {
+	display: table-cell;
+	width: 180px;
+	padding: 10px;
+	background-color: #DEDEDE;
+	border-right: 1px dashed #32537F;
+}
+
+fieldset.login {
+	width: 160px;
+	padding: 0px 10px;
+	border: 1px dotted #32537F;
+}
+
+fieldset.login input {
+	margin-bottom: 4px;
+}
+
+fieldset.login input[type=text], fieldset.login input[type=password] {
+	width: 152px;
+}
+
+#mainContent {
+	display: table-cell;
+	width: 760px;
+	padding-left: 22px;
+	background-color: #DEDEDE;
+}
+
+#info {
+	margin: 10px 10px 20px 0;
+	padding: 10px;
+	border: 1px dashed #32537F;
+}
+
+#info dl {
+}
+
+#info dl dt {
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+#info dl dd {
+	padding-left: 40px;
+	height: 50px;
+	line-height: 50px;
+	color: #FFFFFF;
+}
+
+#info dl dd.Notice {
+	background-color: red;
+	background-image: url("wrong.png");
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	background-origin: border-box;
+}
+
+#info dl dd.OK {
+	background-color: green;
+	background-image: url("correct.png");
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	background-origin: border-box;
+}

@@ -1,0 +1,35 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Lab - {lab.labNumber}: {lab.name}</f:section>
+
+<f:section name="Content">
+	<ul>
+		<f:for each="{studentExercises}" as="studentExercise">
+			<li>
+				<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
+				<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
+			</li>
+		</f:for>
+	</ul>
+	<f:comment>
+	<ul>
+		<f:for each="{lab.exercises}" as="exercise">
+			<f:for each="{student.exercises}" as="studentExercise">
+				<f:if condition="{exercise} == {studentExercise.exercise}">
+					<li>
+						<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
+						<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
+					</li>
+				</f:if>
+			</f:for>
+		</f:for>
+	</ul>
+
+	<ul>
+		<f:for each="{lab.exercises}" as="exercise">
+			<f:link.action controller="exercise" action="edit" arguments="{exercise: exercise}">{exercise.exerciseNumber}</f:link.action>
+		</f:for>
+	</ul>
+	</f:comment>
+
+</f:section>

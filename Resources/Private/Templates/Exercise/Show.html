@@ -1,0 +1,11 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Exercise - {exercise.exerciseNumber}</f:section>
+
+<f:section name="Content">
+
+	<p>{f:format.raw(value: exercise.question)}</p>
+	<p>{f:format.raw(value: exercise.hint)}</p>
+	<p>{f:format.raw(value: exercise.answer)}</p>
+
+</f:section>

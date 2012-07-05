@@ -1,0 +1,44 @@
+<ul>
+	<f:for each="{modules}" as="module">
+		<f:if condition="{module} == {currentModule}">
+			<f:then>
+				<li class="active">
+				<f:if condition="{currentLab}">
+					<f:then>
+						<f:link.action controller="Module" action="show" arguments="{module: module}">{module.name}</f:link.action>
+					</f:then>
+					<f:else>
+						{module.name}
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+				<li><f:link.action controller="Module" action="show" arguments="{module: module}">{module.name}</f:link.action>
+			</f:else>
+		</f:if>
+			<f:if condition="{module.labs -> f:count()} > 0">
+				<ul>
+					<f:for each="{module.labs}" as="lab">
+						<f:if condition="{lab} == {currentLab}">
+							<f:then>
+								<li class="active">
+								<f:if condition="{currentExercise}">
+									<f:then>
+										<f:link.action controller="Lab" action="show" arguments="{lab: lab}">{lab.name}</f:link.action>
+									</f:then>
+									<f:else>
+										{lab.name}
+									</f:else>
+								</f:if>
+								</li>
+							</f:then>
+							<f:else>
+								<li><f:link.action controller="Lab" action="show" arguments="{lab: lab}">{lab.name}</f:link.action></li>
+							</f:else>
+						</f:if>
+					</f:for>
+				</ul>
+			</f:if>
+		</li>
+	</f:for>
+</ul>
