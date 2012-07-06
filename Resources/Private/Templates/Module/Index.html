@@ -1,19 +1,19 @@
+{namespace hse=HSE\Labor\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Title">Modules</f:section>
 
 <f:section name="Content">
-	<ul>
-		<f:for each="{modules}" as="module">
-			<li>
-				<f:link.action action="show" arguments="{module: module}">{module.name}</f:link.action>
-				<f:security.ifHasRole role="Administrator">
-					<f:link.action action="edit" arguments="{module: module}">Edit</f:link.action>
-					<f:link.action action="delete" arguments="{module: module}">Delete</f:link.action>
-				</f:security.ifHasRole>
-			</li>
-		</f:for>
-	</ul>
+	<hse:list listType="ul" each="{modules}" as="module" additionalAttributes="{class: 'niceClass'}">
+		<li>
+			<f:link.action action="show" arguments="{module: module}">{module.name}</f:link.action>
+			<f:security.ifHasRole role="Administrator">
+				<f:link.action action="edit" arguments="{module: module}">Edit</f:link.action>
+				<f:link.action action="delete" arguments="{module: module}">Delete</f:link.action>
+			</f:security.ifHasRole>
+		</li>
+	</hse:list>
 	<f:security.ifHasRole role="Administrator">
 		<f:link.action action="new">Add a new Module</f:link.action>
 	</f:security.ifHasRole>

@@ -3,6 +3,7 @@ required:
  - Template for Loginform. Own LoginController or LDAP/LoginController? Authentication method.
  - add exercises to student. in constructor?
  - remove unecessary html output -> if conditions to check if a <ul></ul> is neede because there will be <li> elements. is there a list view helper?
+ - action/templates: show should list information about a specified item and index list mutliple items
 
 optional:
  - Lab::getRandomExercises looks strange. Maybe wrong place too.

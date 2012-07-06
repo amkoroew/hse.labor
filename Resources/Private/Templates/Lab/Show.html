@@ -1,35 +1,27 @@
+{namespace hse=HSE\Labor\ViewHelpers;
+
 <f:layout name="Default" />
 
 <f:section name="Title">Lab - {lab.labNumber}: {lab.name}</f:section>
 
 <f:section name="Content">
-	<ul>
-		<f:for each="{studentExercises}" as="studentExercise">
-			<li>
-				<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
-				<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
-			</li>
-		</f:for>
-	</ul>
-	<f:comment>
-	<ul>
-		<f:for each="{lab.exercises}" as="exercise">
-			<f:for each="{student.exercises}" as="studentExercise">
-				<f:if condition="{exercise} == {studentExercise.exercise}">
-					<li>
-						<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
-						<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
-					</li>
-				</f:if>
-			</f:for>
-		</f:for>
-	</ul>
-
-	<ul>
-		<f:for each="{lab.exercises}" as="exercise">
-			<f:link.action controller="exercise" action="edit" arguments="{exercise: exercise}">{exercise.exerciseNumber}</f:link.action>
-		</f:for>
-	</ul>
-	</f:comment>
-
+	<f:security.ifHasRole role="Administrator">
+		<f:then>
+			<hse:list listType="ul" each="{exercises}" as="exercise">
+				<li>
+					<f:link.action controller="exercise" action="show" arguments="{exercise: exercise}">{exercise.name}</f:link.action>
+					<f:link.action controller="exercise" action="edit" arguments="{exercise: exercise}">Edit</f:link.action>
+					<f:link.action controller="exercise" action="delete" arguments="{exercise: exercise}">Delete</f:link.action>
+				</li>
+			</hse:list>
+		</f:then>
+		<f:else>
+			<hse:list listType="ul" each="{studentExercises}" as="studentExercise">
+				<li>
+					<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
+					<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
+				</li>
+			</hse:list>
+		</f:else>
+	</f:security.ifHasRole>
 </f:section>

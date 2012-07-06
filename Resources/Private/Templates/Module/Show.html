@@ -1,20 +1,20 @@
+{namespace hse=HSE\Labor\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Title">{module.name}</f:section>
 
 <f:section name="Content">
-	<f:if condition="{labs -> f:count()} > 0">
-		<ul>
-			<f:for each="{labs}" as="lab">
-				<li><f:link.action controller="lab" action="show" arguments="{lab: lab}">{lab.labNumber} - {lab.name}</f:link.action></li>
-				<f:security.ifHasRole role="Administrator">
-					<f:link.action controller="lab" action="edit" arguments="{lab: lab}">Edit</f:link.action>
-					<f:link.action controller="lab" action="delete" arguments="{lab: lab}">Delete</f:link.action>
-				</f:security.ifHasRole>
-			</f:for>
-		</ul>
-	</f:if>
+	<hse:list listType="ul" each="{labs}" as="lab">
+		<li>
+			<f:link.action controller="lab" action="show" arguments="{lab: lab}">{lab.labNumber} - {lab.name}</f:link.action>
+			<f:security.ifHasRole role="Administrator">
+				<f:link.action controller="lab" action="edit" arguments="{lab: lab}">Edit</f:link.action>
+				<f:link.action controller="lab" action="delete" arguments="{lab: lab}">Delete</f:link.action>
+			</f:security.ifHasRole>
+		</li>
+	</hse:list>
 	<f:security.ifHasRole role="Administrator">
-		<f:link.action controller="lab" action="new" arguments="{module: module}">Add a new lab</f:link.action>
+		<f:link.action controller="lab" action="new" arguments="{module: currentModule}">Add a new lab</f:link.action>
 	</f:security.ifHasRole>
 </f:section>

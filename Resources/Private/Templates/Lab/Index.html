@@ -1,11 +1,11 @@
+{namespace hse=HSE\Labor\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Title">Labs</f:section>
 
 <f:section name="Content">
-	<ul>
-		<f:for each="{activeExercises}" as="activeExercise">
-			<li>{activeExercise.exerciseNumber}</li>
-		</f:for>
-	</ul>
+	<hse:list listType="ul" each="{activeExercises}" as="activeExercise">
+		<li>{activeExercise.exerciseNumber}</li>
+	</hse:list>
 </f:section>

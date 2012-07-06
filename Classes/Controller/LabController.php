@@ -37,8 +37,12 @@ class LabController extends \HSE\Labor\Controller\AbstractBaseController {
 		$this->view->assign('lab', $lab);
 		$this->view->assign('currentModule', $lab->getModule());
 		$this->view->assign('currentLab', $lab);
-		$student = $this->securityContext->getParty();
-		$this->view->assign('studentExercises', $student->getExercisesByLab($lab));
+		if($this->securityContext->hasRole('Administrator')) {
+			$this->view->assign('exercises', $this->exerciseRepository->findActiveByLab($lab));
+		} else {
+			$student = $this->securityContext->getParty();
+			$this->view->assign('studentExercises', $student->getExercisesByLab($lab));
+		}
 	}
 
 	/**
