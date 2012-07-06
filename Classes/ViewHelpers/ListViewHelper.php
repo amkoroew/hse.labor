@@ -9,7 +9,7 @@ use \TYPO3\FLOW3\Annotations as FLOW3;
  *
  * @FLOW3\Scope("prototype")
  */
-class ListViewHelper extends \TYPO3\Fluid\ViewHelpers\ForViewHelper {
+class ListViewHelper extends \TYPO3\Fluid\ViewHelpers\ForViewHelper implements \TYPO3\Fluid\Core\ViewHelper\Facets\CompilableInterface {
 
 	/**
 	 * Initialize arguments.
@@ -33,20 +33,34 @@ class ListViewHelper extends \TYPO3\Fluid\ViewHelpers\ForViewHelper {
 	 * @return string Rendered string
 	 */
 	public function render($each, $as, $key = '', $reverse = FALSE, $iteration = NULL) {
-		if ($this->hasArgument('listType') && strlen($this->arguments['listType']) > 0) {
-			$listType = $this->arguments['listType'];
+		return self::renderStatic($this->arguments, $this->buildRenderChildrenClosure(), $this->renderingContext);
+	}
+
+	/**
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @return string
+	 * @throws \TYPO3\Fluid\Core\ViewHelper\Exception
+	 */
+	static public function renderStatic(array $arguments, \Closure $renderChildrenClosure, \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
+		$listType = NULL;
+		$additionalAttributes = array();
+		if ($arguments['listType'] && strlen($arguments['listType']) > 0) {
+			$listType = $arguments['listType'];
 		}
-		if ($this->hasArgument('additionalAttributes') && is_array($this->arguments['additionalAttributes'])) {
-			$additionalAttributes = $this->arguments['additionalAttributes'];
+		if ($arguments['additionalAttributes'] && is_array($arguments['additionalAttributes'])) {
+			$additionalAttributes = $arguments['additionalAttributes'];
 		}
+
 		$out = '';
-		if(!empty($each)) {
+		if(count($arguments['each']) > 0) {
 			$out .= '<'.$listType;
 			foreach($additionalAttributes as $attribute => $value) {
 				$out .= ' '.$attribute.'="'.$value.'"';
 			}
 			$out .= '>';
-			$out .= parent::render($each, $as, $key, $reverse, $iteration);
+			$out .= parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
 			$out .= '</'.$listType.'>';
 		}
 		return $out;
