@@ -175,7 +175,7 @@ class Exercise implements ExerciseInterface {
 	 *
 	 * @return boolean
 	 */
-	public function isActive() {
+	public function getActive() {
 		return $this->active;
 	}
 

@@ -1,16 +1,11 @@
 required:
  - complete CRUD for Module, Lab, Exercise
    - CRUD for Student, StudentExercise?
- - add exercises to student. in constructor?
 
 optional:
- - Lab::getRandomExercises looks strange. Maybe wrong place too.
- - redirect to useful/sensible site
  - rename exercices to studentExercises in sudent class?
  - cleanup Student tests (in particular creation of multiple exercises in the test cases)
  - use groupname instead of gid
- - should showAction from  module controller list labs or should der be a listAction in lab controller?
- - translation
 
 note:
- - gid 20000 for students 10000 for admins (a student will never be admin even if both gids exist)
+ - gid for admin is defined in the settings (a admin will never be a student even if more gids exist)

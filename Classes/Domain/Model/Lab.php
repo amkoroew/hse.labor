@@ -135,10 +135,55 @@ class Lab {
 	/**
 	 * Get the Lab's exercises
 	 *
-	 * @return \Doctrine\Common\Collections\Collection The Lab's exercises
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Exercise> The Lab's exercises
 	 */
 	public function getExercises() {
 		return $this->exercises;
+	}
+
+	/**
+	 * Get only the Lab's active exercises
+	 *
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Exercise> The Lab's active exercises
+	 */
+	public function getActiveExercises() {
+		$activeExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getExercises() as $exercise) {
+			if ($exercise->getActive() === TRUE) {
+				$activeExercises->add($exercise);
+			}
+		}
+		return $activeExercises;
+	}
+
+	/**
+	 * Get only the Lab's active required exercises
+	 *
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Exercise> The Lab's active required exercises
+	 */
+	public function getActiveRequiredExercises() {
+		$activeRequiredExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getActiveExercises() as $exercise) {
+			if ($exercise->getRequired() === TRUE) {
+				$activeRequiredExercises->add($exercise);
+			}
+		}
+		return $activeRequiredExercises;
+	}
+
+	/**
+	 * Get only the Lab's active optional exercises
+	 *
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Exercise> The Lab's active optional exercises
+	 */
+	public function getActiveOptionalExercises() {
+		$activeOptionalExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getActiveExercises() as $exercise) {
+			if ($exercise->getRequired() === FALSE) {
+				$activeOptionalExercises->add($exercise);
+			}
+		}
+		return $activeOptionalExercises;
 	}
 
 	/**
@@ -166,16 +211,20 @@ class Lab {
 	 * Get random exercises of this lab
 	 * The number of exercises to return is defined by $this->numberOfExercises
 	 *
-	 * @return \Doctrine\Common\Collections\Collection Random exercises of this lab
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Exercise> Random exercises of this lab
 	 */
 	public function getRandomExercises() {
-		$exercises = $this->getExercises();
+		$exercises = $this->getActiveRequiredExercises();
 		for($i = $exercises->count() - 1; $i > 0; --$i) {
 			$index = mt_rand(0, $i);
 			$temp = $exercises->offsetGet($i);
 			$exercises->offsetSet($i, $exercises->offsetGet($index));
 			$exercises->offsetSet($index, $temp);
 		}
-		return $exercises->slice(0, $this->getNumberOfExercises());
+		$randomExercises = new \Doctrine\Common\Collections\ArrayCollection($exercises->slice(0, $this->getNumberOfExercises()));
+		foreach($this->getActiveOptionalExercises() as $activeOptionalExercise) {
+			$randomExercises->add($activeOptionalExercise);
+		}
+		return $randomExercises;
 	}
 }
