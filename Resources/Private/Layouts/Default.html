@@ -29,7 +29,9 @@
 								<span class="highlighted">Administrator</span><br />
 							</f:then>
 							<f:else>
-								Solved Ecercises: {party.answeredCount}/{party.exercisesCount} {party.answeredPercentage}%<br />
+								<h3>Solved Ecercises</h3>
+								Required: {party.requiredAnsweredCount}/{party.requiredExercisesCount} {party.requiredAnsweredPercentage}%<br />
+								Optional: {party.optionalAnsweredCount}/{party.optionalExercisesCount} {party.optionalAnsweredPercentage}%<br />
 							</f:else>
 						</f:security.ifHasRole>
 						<f:link.action controller="login" action="logout">Logout</f:link.action>

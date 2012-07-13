@@ -79,6 +79,36 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
+	 * Get only the required exercises
+	 *
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise> The required exercises
+	 */
+	public function getRequiredExercises() {
+		$requiredExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getExercises() as $exercise) {
+			if ($exercise->getRequired() === TRUE) {
+				$requiredExercises->add($exercise);
+			}
+		}
+		return $requiredExercises;
+	}
+
+	/**
+	 * Get only the optional exercises
+	 *
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise> The optional exercises
+	 */
+	public function getOptionalExercises() {
+		$optionalExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getExercises() as $exercise) {
+			if ($exercise->getRequired() === FALSE) {
+				$optionalExercises->add($exercise);
+			}
+		}
+		return $optionalExercises;
+	}
+
+	/**
 	 * @param \HSE\Labor\Domain\Model\Lab $lab
 	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise>
 	 */
@@ -125,18 +155,25 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
-	 *
+	 * @return integer
 	 */
-	public function getExercisesCount() {
-		return $this->exercises->count();
+	public function getRequiredExercisesCount() {
+		return $this->getRequiredExercises()->count();
 	}
 
 	/**
-	 *
+	 * @return integer
 	 */
-	public function getAnsweredCount() {
+	public function getOptionalExercisesCount() {
+		return $this->getOptionalExercises()->count();
+	}
+
+	/**
+	 * return integer
+	 */
+	public function getRequiredAnsweredCount() {
 		$answered = 0;
-		foreach($this->exercises as $exercise) {
+		foreach($this->getRequiredExercises() as $exercise) {
 			if($exercise->getAnswered() === TRUE) {
 				++$answered;
 			}
@@ -145,13 +182,37 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
-	 *
+	 * return integer
 	 */
-	public function getAnsweredPercentage() {
-		if($this->getExercisesCount() == 0) {
+	public function getOptionalAnsweredCount() {
+		$answered = 0;
+		foreach($this->getOptionalExercises() as $exercise) {
+			if($exercise->getAnswered() === TRUE) {
+				++$answered;
+			}
+		}
+		return $answered;
+	}
+
+	/**
+	 * return integer
+	 */
+	public function getRequiredAnsweredPercentage() {
+		if($this->getRequiredExercisesCount() == 0) {
 			return 0;
 		} else {
-			return round(($this->getAnsweredCount() / $this->getExercisesCount()) * 100);
+			return round(($this->getRequiredAnsweredCount() / $this->getRequiredExercisesCount()) * 100);
+		}
+	}
+
+	/**
+	 * return integer
+	 */
+	public function getOptionalAnsweredPercentage() {
+		if($this->getOptionalExercisesCount() == 0) {
+			return 0;
+		} else {
+			return round(($this->getOptionalAnsweredCount() / $this->getOptionalExercisesCount()) * 100);
 		}
 	}
 }
