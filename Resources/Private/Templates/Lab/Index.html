@@ -5,7 +5,17 @@
 <f:section name="Title">Labs</f:section>
 
 <f:section name="Content">
-	<hse:list listType="ul" each="{activeExercises}" as="activeExercise">
-		<li>{activeExercise.exerciseNumber}</li>
+	<hse:list listType="ul" each="{labs}" as="lab">
+		<li>
+			<f:link.action action="show" arguments="{lab: lab}">{lab.name}</f:link.action>
+			<f:link.action controller="exercise" action="index" arguments="{lab: lab}">List exercises for this lab</f:link.action>
+			<f:security.ifHasRole role="Administrator">
+				<f:link.action action="edit" arguments="{lab: lab}">Edit</f:link.action>
+				<f:link.action action="delete" arguments="{lab: lab}">Delete</f:link.action>
+			</f:security.ifHasRole>
+		</li>
 	</hse:list>
+	<f:security.ifHasRole role="Administrator">
+		<f:link.action action="new" arguments="{module: module}">Add a new Lab</f:link.action>
+	</f:security.ifHasRole>
 </f:section>

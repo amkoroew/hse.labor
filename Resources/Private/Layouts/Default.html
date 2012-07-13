@@ -9,8 +9,10 @@
 	</head>
 	<body>
 		<header>
-			<h1>Fakultät Informationstechnik</h1>
-			<h2>Labor für Betriebssysteme (F1.305)</h2>
+			<f:link.action controller="module" action="index">
+				<h1>Fakultät Informationstechnik</h1>
+				<h2>Labor für Betriebssysteme (F1.305)</h2>
+			</f:link.action>
 		</header>
 		<nav>
 			<f:render partial="Navigation" arguments="{modules: modules, currentModule: currentModule, currentLab: currentLab, currentExercise: currentExercise}"  />

@@ -1,0 +1,21 @@
+{namespace hse=HSE\Labor\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Title">Exercises</f:section>
+
+
+<f:section name="Content">
+	<hse:list listType="ul" each="{exercises}" as="exercise">
+		<li>
+			<f:link.action action="show" arguments="{exercise: exercise}">{exercise.question}</f:link.action>
+			<f:security.ifHasRole role="Administrator">
+				<f:link.action action="edit" arguments="{exercise: exercise}">Edit</f:link.action>
+				<f:link.action action="delete" arguments="{exercise: exercise}">Delete</f:link.action>
+			</f:security.ifHasRole>
+		</li>
+	</hse:list>
+	<f:security.ifHasRole role="Administrator">
+		<f:link.action action="new" arguments="{lab: lab}">Add a new Exercise</f:link.action>
+	</f:security.ifHasRole>
+</f:section>

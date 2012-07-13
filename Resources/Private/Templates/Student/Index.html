@@ -1,0 +1,17 @@
+{namespace hse=HSE\Labor\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Title">Students</f:section>
+
+
+<f:section name="Content">
+	<hse:list listType="ul" each="{students}" as="student">
+		<li>
+			<f:link.action action="show" arguments="{student: student}">{student.name.fullName}</f:link.action>
+			<f:security.ifHasRole role="Administrator">
+				<f:link.action action="edit" arguments="{student: student}">Edit</f:link.action>
+			</f:security.ifHasRole>
+		</li>
+	</hse:list>
+</f:section>

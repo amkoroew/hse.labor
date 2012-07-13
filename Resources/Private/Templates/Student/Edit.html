@@ -1,0 +1,15 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Edit an existing Student</f:section>
+
+<f:section name="Content">
+
+	<f:flashMessages class="flashmessages"/>
+	
+	<f:form method="post" action="update" object="{student}" name="student">
+		<label for="exercises">Exercises</label><br />
+		<f:form.select options="{exercises}" value="{assignedExercises}" optionLabelField="exerciseNumber" name="exercises" multiple="1" size="4" id="exercises" /><br />
+		<f:form.submit value="Update Student" />
+	</f:form>
+
+</f:section>

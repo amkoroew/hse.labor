@@ -5,16 +5,27 @@
 <f:section name="Title">Modules</f:section>
 
 <f:section name="Content">
-	<hse:list listType="ul" each="{modules}" as="module" additionalAttributes="{class: 'niceClass'}">
-		<li>
-			<f:link.action action="show" arguments="{module: module}">{module.name}</f:link.action>
-			<f:security.ifHasRole role="Administrator">
-				<f:link.action action="edit" arguments="{module: module}">Edit</f:link.action>
-				<f:link.action action="delete" arguments="{module: module}">Delete</f:link.action>
-			</f:security.ifHasRole>
-		</li>
-	</hse:list>
+	<f:comment><f:link.action controller="student" action="index">List students</f:link.action></f:comment>
 	<f:security.ifHasRole role="Administrator">
+		<hse:list listType="ul" each="{modules}" as="module">
+			<li>
+				<f:link.action action="show" arguments="{module: module}">{module.name}</f:link.action>
+				<f:link.action controller="lab" action="index" arguments="{module: module}">List labs for this module</f:link.action>
+				<f:security.ifHasRole role="Administrator">
+					<f:link.action action="edit" arguments="{module: module}">Edit</f:link.action>
+					<f:link.action action="delete" arguments="{module: module}">Delete</f:link.action>
+				</f:security.ifHasRole>
+			</li>
+		</hse:list>
 		<f:link.action action="new">Add a new Module</f:link.action>
+		<h3>XML Input</h3>
+		<p>
+			Add Modules, Labs and Exercises from a XML File.
+		</p>
+		<f:form action="populate" name="xml" enctype="multipart/form-data">
+			<label for="file">Filename:</label>
+			<f:form.upload name="file" /><br />
+			<f:form.submit value="Upload XML file" />
+		</f:form>
 	</f:security.ifHasRole>
 </f:section>

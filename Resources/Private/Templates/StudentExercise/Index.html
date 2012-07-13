@@ -1,0 +1,13 @@
+{namespace hse=HSE\Labor\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Title">Studentexercises</f:section>
+
+<f:section name="Content">
+	<hse:list listType="ul" each="{studentExercises}" as="studentExercise">
+		<li>
+			<f:link.action action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
+		</li>
+	</hse:list>
+</f:section>

@@ -25,6 +25,11 @@ p {
 	clear: both;
 }
 
+b {
+	font-weight: bold;
+	color: blue;
+}
+
 .highlighted {
 	color: red;
 	font-size: 1.2em;
@@ -44,6 +49,10 @@ header {
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	background-origin: border-box;
+}
+
+header a {
+	text-decoration: none;
 }
 
 header h1, header h2 {
