@@ -81,6 +81,14 @@ class StudentExercise implements StudentInterface, ExerciseInterface {
 	}
 
 	/**
+	 * @return void
+	 */
+	public function remove() {
+		$this->student->removeExercise($this);
+		$this->exercise->removeStudent($this);
+	}
+
+	/**
 	 * @param boolean $answered
 	 * @return void
 	 */
@@ -96,11 +104,11 @@ class StudentExercise implements StudentInterface, ExerciseInterface {
 	}
 
 	/**
-	 * @param \HSE\Labor\Domain\Model\Student
+	 * @param \HSE\Labor\Domain\Model\StudentExercise $studentExercise
 	 * @return void
 	 */
-	public function addStudent($student) {
-		$this->exercise->addStudent($student);
+	public function addStudent($studentExercise) {
+		$this->exercise->addStudent($studentExercise);
 	}
 
 	/**
@@ -143,5 +151,12 @@ class StudentExercise implements StudentInterface, ExerciseInterface {
 	 */
 	public function getRequired() {
 		return $this->exercise->getRequired();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function __toString() {
+		return 'Student '.$this->student->getName()->getFullName().' has to Solve Exercise '.$this->exercise->getExerciseNumber();
 	}
 }

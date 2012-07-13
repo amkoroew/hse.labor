@@ -25,7 +25,7 @@ class Module {
 	/**
 	 * The labs
 	 * @var \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Lab>
-	 * @ORM\OneToMany(mappedBy="module")
+	 * @ORM\OneToMany(mappedBy="module",cascade={"persist"})
 	 * @ORM\OrderBy({"labNumber" = "ASC"})
 	 */
 	protected $labs;

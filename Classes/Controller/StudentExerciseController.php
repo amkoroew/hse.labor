@@ -16,6 +16,15 @@ use TYPO3\FLOW3\Annotations as FLOW3;
 class StudentExerciseController extends \HSE\Labor\Controller\AbstractBaseController {
 
 	/**
+	 * @param \HSE\Labor\Domain\Model\Lab $lab
+	 * @return void
+	 */
+	public function indexAction($lab) {
+		$student = $this->securityContext->getParty();
+		$this->view->assign('studentExercises', $student->getExercisesByLab($lab));
+	}
+	
+	/**
 	 * Display a StudentExercise
 	 *
 	 * @param \HSE\Labor\Domain\Model\StudentExercise $studentExercise
@@ -34,7 +43,7 @@ class StudentExerciseController extends \HSE\Labor\Controller\AbstractBaseContro
 	 * @return void
 	 */
 	public function verifyAction($studentExercise, $answer) {
-		if($studentExercise->getAnswer() === $answer) {
+		if(preg_match($studentExercise->getAnswer(), $answer)) {
 			$student = $studentExercise->getStudent();
 			foreach($student->getExercises() as $exercise) {
 				if($exercise === $studentExercise) {

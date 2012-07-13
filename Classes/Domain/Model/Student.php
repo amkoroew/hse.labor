@@ -19,7 +19,7 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	/**
 	 * The exercises
 	 * @var \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise>
-	 * @ORM\OneToMany(mappedBy="student")
+	 * @ORM\OneToMany(mappedBy="student",cascade={"persist"})
 	 */
 	protected $exercises;
 
@@ -54,6 +54,24 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 //	}
 
 	/**
+	 * Generates the Exercises for this student
+	 *
+	 * @param \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Module>
+	 * @return void
+	 */
+	public function generateExercises($modules) {
+		foreach($modules as $module) {
+			foreach($module->getLabs() as $lab) {
+				foreach($lab->getRandomExercises() as $randomExercise) {
+					$studentExercise = new \HSE\Labor\Domain\Model\StudentExercise($this, $randomExercise);
+					$this->addExercise($studentExercise);
+				}
+			}
+		}
+	}
+
+
+	/**
 	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise>
 	 */
 	public function getExercises() {
@@ -80,6 +98,9 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	 * @return void
 	 */
 	public function setExercises($studentExercises) {
+		foreach($this->exercises as $oldExercise) {
+			$oldExercise->remove();
+		}
 		foreach($studentExercises as $exercise) {
 			$exercise->addStudent($this);
 		}
@@ -91,7 +112,7 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	 * @return void
 	 */
 	public function addExercise($studentExercise) {
-		$studentExercise->addStudent($this);
+		$studentExercise->addStudent($studentExercise);
 		$this->exercises->add($studentExercise);
 	}
 

@@ -220,10 +220,20 @@ class Exercise implements ExerciseInterface {
 	/**
 	 * Adds a student to the exercise
 	 *
-	 * @param \HSE\Labor\Domain\Model\Student $student The student to add.
+	 * @param \HSE\Labor\Domain\Model\StudentExercise $studentExercise The studentExercise to add.
 	 * @return void
 	 */
-	public function addStudent(\HSE\Labor\Domain\Model\Student $student) {
-		$this->students->add($student);
+	public function addStudent($studentExercise) {
+		$this->students->add($studentExercise);
+	}
+
+	/**
+	 * Removes a student from this exercise
+	 *
+	 * @param \HSE\Labor\Domain\Model\StudentExercise $studentExercise The student to remove from this exercise
+	 * @return void
+	 */
+	public function removeStudent($studentExercise) {
+		$this->students->removeElement($studentExercise);
 	}
 }

@@ -21,7 +21,7 @@ class StudentController extends \HSE\Labor\Controller\AbstractBaseController {
 	 * @return void
 	 */
 	public function indexAction() {
-		$this->view->assign('students', $this->partyRepository->findAll());
+		$this->view->assign('students', $this->studentRepository->findAll());
 	}
 
 	/**
@@ -34,6 +34,38 @@ class StudentController extends \HSE\Labor\Controller\AbstractBaseController {
 	public function showAction(\HSE\Labor\Domain\Model\Module $module, \HSE\Labor\Domain\Model\Student $student) {
 		$this->view->assign('student', $student);
 		$this->view->assign('labs', $module->getLabs());
+	}
+
+	/**
+	 * Display a form for editing a Student
+	 *
+	 * @param \HSE\Labor\Domain\Model\Student $student The student to edit
+	 * @FLOW3\IgnoreValidation("$student")
+	 * @return void
+	 */
+	public function editAction(\HSE\Labor\Domain\Model\Student $student) {
+		$this->view->assign('student', $student);
+		$this->view->assign('exercises', $this->exerciseRepository->findAll());
+		$this->view->assign('assignedExercises', $student->getExercises());
+	}
+
+	/**
+	 * Updates an existing Student
+	 *
+	 * @param \HSE\Labor\Domain\Model\Student $student
+	 * @param \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Exercise> $exercises
+	 * @return void
+	 */
+	public function updateAction(\HSE\Labor\Domain\Model\Student $student, $exercises) {
+		$studentExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($exercises as $exercise) {
+			$studentExercises->add(new \HSE\Labor\Domain\Model\StudentExercise($student, $exercise));
+		}
+		$student->setExercises($studentExercises);
+		$this->studentRepository->update($student);
+		$this->addFlashMessage('The student has been updated.');
+		//$this->redirect('show', 'student', NULL, array('student' => $student));
+		$this->redirect('index', 'module');
 	}
 
 	/**

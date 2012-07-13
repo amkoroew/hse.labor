@@ -18,9 +18,12 @@ class ExerciseController extends \HSE\Labor\Controller\AbstractBaseController {
 	/**
 	 * Index action
 	 *
+	 * @param \HSE\Labor\Domain\Model\Lab $lab
 	 * @return void
 	 */
-	public function indexAction() {
+	public function indexAction($lab) {
+		$this->view->assign('lab', $lab);
+		$this->view->assign('exercises', $lab->getExercises());
 	}
 
 	/**
@@ -58,7 +61,7 @@ class ExerciseController extends \HSE\Labor\Controller\AbstractBaseController {
 		$lab->addExercise($newExercise);
 		$this->exerciseRepository->add($newExercise);
 		$this->addFlashMessage('Your new exercise was created.');
-		$this->redirect('index', 'module');
+		$this->redirect('show', 'exercise', NULL, array('exercise' => $newExercise));
 	}
 
 	/**
@@ -81,7 +84,22 @@ class ExerciseController extends \HSE\Labor\Controller\AbstractBaseController {
 	public function updateAction(\HSE\Labor\Domain\Model\Exercise $exercise) {
 		$this->exerciseRepository->update($exercise);
 		$this->addFlashMessage('Your exercise has been updated.');
-		$this->redirect('index', 'module');
+		$this->redirect('show', 'exercise', NULL, array('exercise' => $exercise));
+	}
+
+	/**
+	 * Deletes an existing Exercise
+	 *
+	 * @param \HSE\Labor\Domain\Model\Exercise $exercise
+	 * @return void
+	 */
+	public function deleteAction(\HSE\Labor\Domain\Model\Exercise $exercise) {
+		$lab = $exercise->getLab();
+		$this->exerciseRepository->remove($exercise);
+		$lab->removeExercise($exercise);
+		$this->labRepository->update($lab);
+		$this->addFlashMessage('Your exercise has been deleted.');
+		$this->redirect('index', 'exercise', NULL, array('lab' => $lab));
 	}
 
 	/**

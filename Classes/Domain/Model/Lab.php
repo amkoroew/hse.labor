@@ -153,6 +153,16 @@ class Lab {
 	}
 
 	/**
+	 * Removes a exercise from this lab
+	 *
+	 * @param \HSE\Labor\Domain\Model\exercise $exercise The exercise to remove
+	 * @return void
+	 */
+	public function removeExercise(\HSE\Labor\Domain\Model\Exercise $exercise) {
+		$this->exercises->removeElement($exercise);
+	}
+
+	/**
 	 * Get random exercises of this lab
 	 * The number of exercises to return is defined by $this->numberOfExercises
 	 *
@@ -166,12 +176,6 @@ class Lab {
 			$exercises->offsetSet($i, $exercises->offsetGet($index));
 			$exercises->offsetSet($index, $temp);
 		}
-		$randomExercises = $exercises->slice(0, $this->getNumberOfExercises());
-		$result = array();
-		foreach($randomExercises as $randomExercise) {
-			$result[$randomExercise->getExerciseNumber()] = $randomExercise;
-		}
-		ksort($result);
-		return new \Doctrine\Common\Collections\ArrayCollection($result);
+		return $exercises->slice(0, $this->getNumberOfExercises());
 	}
 }

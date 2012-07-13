@@ -18,11 +18,13 @@ class LabController extends \HSE\Labor\Controller\AbstractBaseController {
 	/**
 	 * Index action
 	 *
-	 * @param \HSE\Labor\Domain\Model\Lab $lab
+	 * @param \HSE\Labor\Domain\Model\Module $module
 	 * @return void
 	 */
-	public function indexAction(\HSE\Labor\Domain\Model\Lab $lab) {
-		$this->view->assign('activeExercises', $this->exerciseRepository->findActiveByLab($lab));
+	public function indexAction(\HSE\Labor\Domain\Model\Module $module) {
+		//$this->view->assign('activeExercises', $this->exerciseRepository->findActiveByLab($lab));
+		$this->view->assign('module', $module);
+		$this->view->assign('labs', $module->getLabs());
 	}
 
 	/**
@@ -38,7 +40,7 @@ class LabController extends \HSE\Labor\Controller\AbstractBaseController {
 		$this->view->assign('currentModule', $lab->getModule());
 		$this->view->assign('currentLab', $lab);
 		if($this->securityContext->hasRole('Administrator')) {
-			$this->view->assign('exercises', $this->exerciseRepository->findActiveByLab($lab));
+			$this->view->assign('exercises', $lab->getExercises());
 		} else {
 			$student = $this->securityContext->getParty();
 			$this->view->assign('studentExercises', $student->getExercisesByLab($lab));
@@ -64,9 +66,9 @@ class LabController extends \HSE\Labor\Controller\AbstractBaseController {
 	 */
 	public function createAction(\HSE\Labor\Domain\Model\Module $module, \HSE\Labor\Domain\Model\Lab $newLab) {
 		$module->addLab($newLab);
-		$this->moduleRepository->update($module);
+		$this->labRepository->add($newLab);
 		$this->addFlashMessage('Your new lab was created.');
-		$this->redirect('index', 'module');
+		$this->redirect('show', 'lab', NULL, array('lab' => $newLab));
 	}
 
 	/**
@@ -87,8 +89,25 @@ class LabController extends \HSE\Labor\Controller\AbstractBaseController {
 	 * @return void
 	 */
 	public function updateAction(\HSE\Labor\Domain\Model\Lab $lab) {
-		$this->moduleRepository->update($lab->getModule());
+		$this->labRepository->update($lab);
 		$this->addFlashMessage('Your lab has been updated.');
-		$this->redirect('index', 'Module');
+		$this->redirect('show', 'lab', NULL, array('lab' => $lab));
+	}
+
+	/**
+	 * Deletes an existing Lab
+	 *
+	 * @param \HSE\Labor\Domain\Model\Lab
+	 * @return void
+	 */
+	public function deleteAction(\HSE\Labor\Domain\Model\Lab $lab) {
+		$module = $lab->getModule();
+		foreach($lab->getExercises() as $exercise) {
+			$this->exerciseRepository->remove($exercise);
+		}
+		$module->removeLab($lab);
+		$this->labRepository->remove($lab);
+		$this->addFlashMessage('Your lab has been deleted.');
+		$this->redirect('index', 'lab', NULL, array('module' => $module));
 	}
 }
