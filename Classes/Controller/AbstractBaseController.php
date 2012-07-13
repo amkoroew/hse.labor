@@ -41,9 +41,21 @@ abstract class AbstractBaseController extends \TYPO3\FLOW3\Mvc\Controller\Action
 
 	/**
 	 * @FLOW3\Inject
+	 * @var \HSE\Labor\Domain\Repository\LabRepository
+	 */
+	protected $labRepository;
+
+	/**
+	 * @FLOW3\Inject
 	 * @var \HSE\Labor\Domain\Repository\ExerciseRepository
 	 */
 	protected $exerciseRepository;
+
+	/**
+	 * @FLOW3\Inject
+	 * @var \HSE\Labor\Domain\Repository\StudentExerciseRepository
+	 */
+	protected $studentExerciseRepository;
 
 	/**
 	 * Initializes the view before invoking an action method.

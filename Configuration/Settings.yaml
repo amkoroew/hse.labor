@@ -37,3 +37,8 @@ TYPO3:
             entryPoint: 'WebRedirect'
             entryPointOptions:
               uri: 'login/index'
+
+HSE:
+  Labor:
+    gid:
+      admin: 10000
