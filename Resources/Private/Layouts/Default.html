@@ -89,7 +89,15 @@
 						<dl>
 							<f:for each="{flashMessages}" as="flashMessage">
 								<dt>{flashMessage.title}</dt>
-								<dd class="{flashMessage.severity}">{flashMessage}</dd>
+								<f:comment>[HACK] onw flash messages should be used. if possible</f:comment>
+								<f:if condition="{flashMessage.title}">
+									<f:then>
+										<dd class="{flashMessage.severity}">{flashMessage}</dd>
+									</f:then>
+									<f:else>
+										<dd>{flashMessage}</dd>
+									</f:else>
+								</f:if>
 							</f:for>
 						</dl>
 					</section>
