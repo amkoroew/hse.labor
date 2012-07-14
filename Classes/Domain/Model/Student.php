@@ -34,26 +34,6 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
-	 * Constructs a Student
-	 *
-	 * @param \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Module>
-	 * @return void
-	 */
-//	public function __construct($modules) {
-//		parent::__construct();
-//		$this->exercises = new \Doctrine\Common\Collections\ArrayCollection();
-		/*foreach($modules as $module) {
-			foreach($module->getLabs() as $lab) {
-				foreach($lab->getRandomExercises() as $randomExercise) {
-					$studentExercise = new \HSE\Labor\Domain\Model\StudentExercise($this, $randomExercise);
-					$this->addExercise($studentExercise);
-				}
-			}
-		}*/
-
-//	}
-
-	/**
 	 * Generates the Exercises for this student
 	 *
 	 * @param \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\Module>
@@ -94,6 +74,22 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
+	 * Get only the required exercises by module
+	 *
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise> The required exercises
+	 */
+	public function getRequiredExercisesByModule($module) {
+		$requiredExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getExercises() as $exercise) {
+			if ($exercise->getLab()->getModule() === $module && $exercise->getRequired() === TRUE) {
+				$requiredExercises->add($exercise);
+			}
+		}
+		return $requiredExercises;
+	}
+
+	/**
 	 * Get only the optional exercises
 	 *
 	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise> The optional exercises
@@ -102,6 +98,22 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 		$optionalExercises = new \Doctrine\Common\Collections\ArrayCollection();
 		foreach($this->getExercises() as $exercise) {
 			if ($exercise->getRequired() === FALSE) {
+				$optionalExercises->add($exercise);
+			}
+		}
+		return $optionalExercises;
+	}
+
+	/**
+	 * Get only the optional exercises by module
+	 *
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * @return \Doctrine\Common\Collections\Collection<\HSE\Labor\Domain\Model\StudentExercise> The optional exercises
+	 */
+	public function getOptionalExercisesByModule($module) {
+		$optionalExercises = new \Doctrine\Common\Collections\ArrayCollection();
+		foreach($this->getExercises() as $exercise) {
+			if ($exercise->getLab()->getModule() === $module && $exercise->getRequired() === FALSE) {
 				$optionalExercises->add($exercise);
 			}
 		}
@@ -162,10 +174,26 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * @return integer
+	 */
+	public function getRequiredExercisesCountByModule($module) {
+		return $this->getRequiredExercisesByModule($module)->count();
+	}
+
+	/**
 	 * @return integer
 	 */
 	public function getOptionalExercisesCount() {
 		return $this->getOptionalExercises()->count();
+	}
+
+	/**
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * @return integer
+	 */
+	public function getOptionalExercisesCountByModule($module) {
+		return $this->getOptionalExercisesByModule($module)->count();
 	}
 
 	/**
@@ -174,6 +202,20 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	public function getRequiredAnsweredCount() {
 		$answered = 0;
 		foreach($this->getRequiredExercises() as $exercise) {
+			if($exercise->getAnswered() === TRUE) {
+				++$answered;
+			}
+		}
+		return $answered;
+	}
+
+	/**
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * return integer
+	 */
+	public function getRequiredAnsweredCountByModule($module) {
+		$answered = 0;
+		foreach($this->getRequiredExercisesByModule($module) as $exercise) {
 			if($exercise->getAnswered() === TRUE) {
 				++$answered;
 			}
@@ -195,6 +237,20 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * return integer
+	 */
+	public function getOptionalAnsweredCountByModule($module) {
+		$answered = 0;
+		foreach($this->getOptionalExercisesByModule($module) as $exercise) {
+			if($exercise->getAnswered() === TRUE) {
+				++$answered;
+			}
+		}
+		return $answered;
+	}
+
+	/**
 	 * return integer
 	 */
 	public function getRequiredAnsweredPercentage() {
@@ -206,6 +262,18 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 	}
 
 	/**
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * return integer
+	 */
+	public function getRequiredAnsweredPercentageByModule($module) {
+		if($this->getRequiredExercisesCountByModule($module) == 0) {
+			return 0;
+		} else {
+			return round(($this->getRequiredAnsweredCountByModule($module) / $this->getRequiredExercisesCountByModule($module)) * 100);
+		}
+	}
+
+	/**
 	 * return integer
 	 */
 	public function getOptionalAnsweredPercentage() {
@@ -213,6 +281,18 @@ class Student extends \TYPO3\Party\Domain\Model\Person implements StudentInterfa
 			return 0;
 		} else {
 			return round(($this->getOptionalAnsweredCount() / $this->getOptionalExercisesCount()) * 100);
+		}
+	}
+
+	/**
+	 * @param \HSE\Labor\Domain\Model\Module $module
+	 * return integer
+	 */
+	public function getOptionalAnsweredPercentageByModule($module) {
+		if($this->getOptionalExercisesCountByModule($module) == 0) {
+			return 0;
+		} else {
+			return round(($this->getOptionalAnsweredCountByModule($module) / $this->getOptionalExercisesCountByModule($module)) * 100);
 		}
 	}
 }

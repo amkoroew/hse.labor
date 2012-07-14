@@ -6,12 +6,22 @@
 
 
 <f:section name="Content">
-	<hse:list listType="ul" each="{students}" as="student">
-		<li>
-			<f:link.action action="show" arguments="{student: student}">{student.name.fullName}</f:link.action>
-			<f:security.ifHasRole role="Administrator">
-				<f:link.action action="edit" arguments="{student: student}">Edit</f:link.action>
-			</f:security.ifHasRole>
-		</li>
-	</hse:list>
+
+	<table>
+		<tr>
+			<td>Student</td>
+			<f:for each="{modules}" as="module">
+				<td>{module.name}</td>
+			</f:for>
+		</tr>
+		<f:for each="{stats}" as="stat">
+			<tr>
+				<td><f:link.action action="show" arguments="{student: stat.student}">{stat.student.name.fullName}</f:link.action></td>
+				<f:for each="{stat.modules}" as="module">
+					<td class="number">{module.stats.requiredAnsweredPercentage}%</td>
+				</f:for>
+			</tr>
+		</f:for>
+	</table>
+
 </f:section>

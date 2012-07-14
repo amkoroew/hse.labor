@@ -22,6 +22,8 @@ class StudentExerciseController extends \HSE\Labor\Controller\AbstractBaseContro
 	public function indexAction($lab) {
 		$student = $this->securityContext->getParty();
 		$this->view->assign('studentExercises', $student->getExercisesByLab($lab));
+		$this->view->assign('currentModule', $lab->getModule());
+		$this->view->assign('currentLab', $lab);
 	}
 	
 	/**
@@ -52,7 +54,7 @@ class StudentExerciseController extends \HSE\Labor\Controller\AbstractBaseContro
 			}
 			$this->studentRepository->update($student);
 			$this->addFlashMessage('Your answer was correct.', 'Exercise verification', \TYPO3\FLOW3\Error\Message::SEVERITY_OK);
-			$this->redirect('show', 'Lab', NULL, array('lab' => $studentExercise->getLab()));
+			$this->redirect('index', 'StudentExercise', NULL, array('lab' => $studentExercise->getLab()));
 		} else {
 			$this->addFlashMessage('Your answer was wrong.', 'Exercise verification', \TYPO3\FLOW3\Error\Message::SEVERITY_NOTICE);
 			$this->redirect('show', 'StudentExercise', NULL, array('studentExercise' => $studentExercise));

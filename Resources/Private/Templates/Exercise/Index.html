@@ -8,7 +8,7 @@
 <f:section name="Content">
 	<hse:list listType="ul" each="{exercises}" as="exercise">
 		<li>
-			<f:link.action action="show" arguments="{exercise: exercise}">{exercise.question}</f:link.action>
+			<f:link.action action="show" arguments="{exercise: exercise}">{f:format.raw(value: exercise.question)}</f:link.action>
 			<f:security.ifHasRole role="Administrator">
 				<f:link.action action="edit" arguments="{exercise: exercise}">Edit</f:link.action>
 				<f:link.action action="delete" arguments="{exercise: exercise}">Delete</f:link.action>

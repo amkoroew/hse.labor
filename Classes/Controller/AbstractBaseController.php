@@ -65,6 +65,22 @@ abstract class AbstractBaseController extends \TYPO3\FLOW3\Mvc\Controller\Action
 	*/
 	protected function initializeView(\TYPO3\FLOW3\Mvc\View\ViewInterface $view) {
 		$view->assign('modules', $this->moduleRepository->findAll());
-		$view->assign('party', $this->securityContext->getParty());
+		$party = $this->securityContext->getParty();
+		$view->assign('party', $party);
+		if($party instanceof \HSE\Labor\Domain\Model\Student) {
+			$stats = array();
+			foreach($this->moduleRepository->findAll() as $module) {
+				$moduleStats['module'] = $module;
+				$moduleStat['requiredExercisesCount']     = $party->getRequiredExercisesCountByModule($module);
+				$moduleStat['requiredAnsweredCount']      = $party->getRequiredAnsweredCountByModule($module);
+				$moduleStat['requiredAnsweredPercentage'] = $party->getRequiredAnsweredPercentageByModule($module);
+				$moduleStat['optionalExercisesCount']     = $party->getOptionalExercisesCountByModule($module);
+				$moduleStat['optionalAnsweredCount']      = $party->getOptionalAnsweredCountByModule($module);
+				$moduleStat['optionalAnsweredPercentage'] = $party->getOptionalAnsweredPercentageByModule($module);
+				$moduleStats['stats'] = $moduleStat;
+				$stats['modules'][] = $moduleStats;
+			}
+			$this->view->assign('stats', $stats);
+		}
 	}
 }

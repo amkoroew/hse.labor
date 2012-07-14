@@ -5,8 +5,8 @@
 <f:section name="Title">Modules</f:section>
 
 <f:section name="Content">
-	<f:comment><f:link.action controller="student" action="index">List students</f:link.action></f:comment>
 	<f:security.ifHasRole role="Administrator">
+		<f:link.action controller="student" action="index">List students</f:link.action>
 		<hse:list listType="ul" each="{modules}" as="module">
 			<li>
 				<f:link.action action="show" arguments="{module: module}">{module.name}</f:link.action>

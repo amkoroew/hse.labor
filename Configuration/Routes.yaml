@@ -98,7 +98,7 @@
 
 -
   name: 'Modules actions'
-  uriPattern: '{@action}'
+  uriPattern: '(module/){@action}'
   defaults:
     '@controller': 'Module'
   

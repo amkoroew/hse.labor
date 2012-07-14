@@ -7,7 +7,13 @@
 <f:section name="Content">
 	<hse:list listType="ul" each="{studentExercises}" as="studentExercise">
 		<li>
-			<f:link.action action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
+			<f:link.action action="show" arguments="{studentExercise: studentExercise}">{f:format.raw(value: studentExercise.question)}</f:link.action>
+			<f:if condition="{studentExercise.required} == 0">
+				[Optional]
+			</f:if>
+			<f:if condition="{studentExercise.answered}">
+				<img height="16px" src="{f:uri.resource(path: 'correct.png')}" />
+			</f:if>
 		</li>
 	</hse:list>
 </f:section>

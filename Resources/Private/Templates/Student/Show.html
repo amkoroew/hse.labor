@@ -4,23 +4,28 @@
 
 <f:section name="Content">
 
-	<ul>
-		<f:for each="{labs}" as="lab">
-			<li>{lab.name}
-				<ul>
-					<f:for each="{lab.exercises}" as="exercise">
-						<f:for each="{student.exercises}" as="studentExercise">
-							<f:if condition="{exercise} == {studentExercise.exercise}">
-								<li>
-									<f:link.action controller="studentExercise" action="show" arguments="{studentExercise: studentExercise}">{studentExercise.exerciseNumber}</f:link.action>
-									<f:if condition="{studentExercise.answered}">You have already answered this exercise.</f:if>
-								</li>
-							</f:if>
-						</f:for>
-					</f:for>
-				</ul>
-			</li>
+	<h3>Solved Exercises</h3>
+	<table>
+		<tr>
+			<td></td>
+			<f:for each="{modules}" as="module">
+				<td>{module.name}</td>
+			</f:for>
+		</tr>
+		<f:for each="{stats}" as="stat">
+			<tr>
+				<td>Required</td>
+				<f:for each="{stat}" as="module">
+					<td class="number">{module.stats.requiredAnsweredCount}/{module.stats.requiredExercisesCount} {module.stats.requiredAnsweredPercentage}%</td>
+				</f:for>
+			</tr>
+			<tr>
+				<td>Optional</td>
+				<f:for each="{stat}" as="module">
+					<td class="number">{module.stats.optionalAnsweredCount}/{module.stats.optionalExercisesCount} {module.stats.optionalAnsweredPercentage}%</td>
+				</f:for>
+			</tr>
 		</f:for>
-	</ul>
+	</table>
 
 </f:section>

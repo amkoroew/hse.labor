@@ -206,3 +206,21 @@ fieldset.login input[type=text], fieldset.login input[type=password] {
 	background-position: 4px center;
 	background-origin: border-box;
 }
+
+table {
+	display: table;
+}
+
+table tr {
+	display: table-row;
+}
+
+table tr td {
+	display: table-cell;
+	padding: 0px 4px;
+	border: 1px solid black;
+}
+
+table tr td.number {
+	text-align: right;
+}

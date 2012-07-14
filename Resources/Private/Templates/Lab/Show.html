@@ -5,7 +5,12 @@
 <f:section name="Title">Lab - {lab.labNumber}: {lab.name}</f:section>
 
 <f:section name="Content">
-	<f:security.ifHasRole role="Student">
-		<f:link.action controller="studentExercise" action="index" arguments="{lab: lab}">List studentExercises for this lab</f:link.action>
+	<f:security.ifHasRole role="Administrator">
+		<f:then>
+			<f:link.action controller="Exercise" action="index" arguments="{lab: lab}">List Exercises for this lab</f:link.action>
+		</f:then>
+		<f:else>
+			<f:link.action controller="studentExercise" action="index" arguments="{lab: lab}">List studentExercises for this lab</f:link.action>
+		</f:else>
 	</f:security.ifHasRole>
 </f:section>

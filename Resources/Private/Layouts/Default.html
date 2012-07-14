@@ -15,7 +15,7 @@
 			</f:link.action>
 		</header>
 		<nav>
-			<f:render partial="Navigation" arguments="{modules: modules, currentModule: currentModule, currentLab: currentLab, currentExercise: currentExercise}"  />
+			<f:render partial="Navigation" arguments="{modules: modules, currentModule: currentModule, currentLab: currentLab, currentExercise: currentExercise}" />
 		</nav>
 		<div class="clear"></div>
 		<div id="content">
@@ -29,9 +29,41 @@
 								<span class="highlighted">Administrator</span><br />
 							</f:then>
 							<f:else>
-								<h3>Solved Ecercises</h3>
-								Required: {party.requiredAnsweredCount}/{party.requiredExercisesCount} {party.requiredAnsweredPercentage}%<br />
-								Optional: {party.optionalAnsweredCount}/{party.optionalExercisesCount} {party.optionalAnsweredPercentage}%<br />
+								<h3>Solved Exercises</h3>
+								<table>
+									<f:for each="{stats}" as="stat">
+										<f:if condition="{currentModule}">
+											<f:then>
+												<tr>
+													<td>Required</td>
+													<f:for each="{stat}" as="module">
+														<f:if condition="{module.module} == {currentModule}">
+															<td>{module.stats.requiredAnsweredCount}/{module.stats.requiredExercisesCount} {module.stats.requiredAnsweredPercentage}%</td>
+														</f:if>
+													</f:for>
+												</tr>
+												<tr>
+													<td>Optional</td>
+													<f:for each="{stat}" as="module">
+														<f:if condition="{module.module} == {currentModule}">
+															<td>{module.stats.optionalAnsweredCount}/{module.stats.optionalExercisesCount} {module.stats.optionalAnsweredPercentage}%</td>
+														</f:if>
+													</f:for>
+												</tr>
+											</f:then>
+											<f:else>	
+												<tr>
+													<td>Required</td>
+													<td>{party.requiredAnsweredCount}/{party.requiredExercisesCount} {party.requiredAnsweredPercentage}%</td>
+												</tr>
+												<tr>
+													<td>Optional</td>
+													<td>{party.optionalAnsweredCount}/{party.optionalExercisesCount} {party.optionalAnsweredPercentage}%</td>
+												</tr>
+											</f:else>
+										</f:if>
+									</f:for>
+								</table>
 							</f:else>
 						</f:security.ifHasRole>
 						<f:link.action controller="login" action="logout">Logout</f:link.action>
@@ -42,9 +74,9 @@
 							<fieldset class="login">
 								<legend>Login</legend>
 								<label>User</label><br />
-								<input type="text" name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][username]" id="username" value="{username}" /><br />
+								<f:form.textfield name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][username]" id="username" tabindex="1" /><br />
 								<label>Password</label><br />
-								<input type="password" name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][password]" id="password" /><br />
+								<f:form.password name="__authentication[TYPO3][FLOW3][Security][Authentication][Token][UsernamePassword][password]" id="password" tabindex="2" /><br />
 								<f:form.submit value="Login" />
 							</fieldset>
 						</f:form>

@@ -33,28 +33,28 @@ class LoginController extends \HSE\Labor\Controller\AbstractBaseController {
 	}
 
 	/**
-         * Authenticates an account by invoking the Provider based Authentication Manager.
-         *
-         * @return void
-         * @throws \TYPO3\FLOW3\Security\Exception\AuthenticationRequiredException
-         */
-        public function authenticateAction() {
-                try {
-                        $this->authenticationManager->authenticate();
-                        $this->redirect('index', 'Module');
-                } catch (\TYPO3\FLOW3\Security\Exception\AuthenticationRequiredException $exception) {
-                        $this->addFlashMessage('Wrong username or password.');
-                        throw $exception;
-                }
-        }
+	 * Authenticates an account by invoking the Provider based Authentication Manager.
+	 *
+	 * @return void
+	 * @throws \TYPO3\FLOW3\Security\Exception\AuthenticationRequiredException
+	 */
+	public function authenticateAction() {
+		try {
+			$this->authenticationManager->authenticate();
+			$this->redirect('index', 'Module');
+		} catch (\TYPO3\FLOW3\Security\Exception\AuthenticationRequiredException $exception) {
+			$this->addFlashMessage('Wrong username or password.');
+			throw $exception;
+		}
+	}
 
-        /**
-         *
-         * @return void
-         */
-        public function logoutAction() {
-                $this->authenticationManager->logout();
-                $this->addFlashMessage('Successfully logged out.');
-                $this->redirect('index', 'Module');
-        }
+	/**
+	 *
+	 * @return void
+	 */
+	public function logoutAction() {
+		$this->authenticationManager->logout();
+		$this->addFlashMessage('Successfully logged out.');
+		$this->redirect('index', 'Module');
+	}
 }

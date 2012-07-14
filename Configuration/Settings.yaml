@@ -11,7 +11,7 @@ TYPO3:
             provider: 'PersistedUsernamePasswordProvider'
             entryPoint: 'WebRedirect'
             entryPointOptions:
-              uri: 'login/index'
+              uri: 'module/index'
           LdapProvider:
             provider: HSE\Labor\Security\Authentication\Provider\LDAPProviderParty
             providerOptions:
@@ -36,7 +36,7 @@ TYPO3:
 
             entryPoint: 'WebRedirect'
             entryPointOptions:
-              uri: 'login/index'
+              uri: 'module/index'
 
 HSE:
   Labor:

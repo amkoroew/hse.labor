@@ -23,7 +23,14 @@
 				<li class="active">
 				<f:if condition="{currentExercise}">
 					<f:then>
-						<f:link.action controller="Lab" action="show" arguments="{lab: lab}">{lab.name}</f:link.action>
+						<f:security.ifHasRole role="Administrator">
+							<f:then>
+								<f:link.action controller="Exercise" action="index" arguments="{lab: lab}">{lab.name}</f:link.action>
+							</f:then>
+							<f:else>
+								<f:link.action controller="StudentExercise" action="index" arguments="{lab: lab}">{lab.name}</f:link.action>
+							</f:else>
+						</f:security.ifHasRole>
 					</f:then>
 					<f:else>
 						{lab.name}
@@ -32,7 +39,14 @@
 				</li>
 			</f:then>
 			<f:else>
-				<li><f:link.action controller="Lab" action="show" arguments="{lab: lab}">{lab.name}</f:link.action></li>
+				<f:security.ifHasRole role="Administrator">
+					<f:then>
+						<li><f:link.action controller="Exercise" action="index" arguments="{lab: lab}">{lab.name}</f:link.action></li>
+					</f:then>
+					<f:else>
+						<li><f:link.action controller="StudentExercise" action="index" arguments="{lab: lab}">{lab.name}</f:link.action></li>
+					</f:else>
+				</f:security.ifHasRole>
 			</f:else>
 		</f:if>
 	</hse:list>
