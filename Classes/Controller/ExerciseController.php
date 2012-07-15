@@ -95,6 +95,12 @@ class ExerciseController extends \HSE\Labor\Controller\AbstractBaseController {
 	 */
 	public function deleteAction(\HSE\Labor\Domain\Model\Exercise $exercise) {
 		$lab = $exercise->getLab();
+		foreach($this->studentExerciseRepository->findAll() as $studentExercise) {
+			if($studentExercise->getExercise() === $exercise) {
+				$this->addFlashMessage('This Exercise is assigned to a student. NOT deleted!');
+				$this->redirect('index', 'exercise', NULL, array('lab' => $lab));
+			}
+		}
 		$this->exerciseRepository->remove($exercise);
 		$lab->removeExercise($exercise);
 		$this->labRepository->update($lab);

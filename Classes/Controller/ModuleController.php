@@ -151,6 +151,12 @@ class ModuleController extends \HSE\Labor\Controller\AbstractBaseController {
 	 * @return void
 	 */
 	public function deleteAction(\HSE\Labor\Domain\Model\Module $module) {
+		foreach($this->studentExerciseRepository->findAll() as $studentExercise) {
+			if($studentExercise->getLab()->getModule() === $module) {
+				$this->addFlashMessage('An Exercise of this Module is assigned to a student. NOT deleted!');
+				$this->redirect('index', 'module');
+			}
+		}
 		foreach($module->getLabs() as $lab) {
 			foreach($lab->getExercises() as $exercise) {
 				$this->exerciseRepository->remove($exercise);
